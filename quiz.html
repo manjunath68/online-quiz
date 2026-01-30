@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Online Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h3 id="timer"></h3>
+        <p id="tab-warning" class="tab-warning"></p>
+
+
+        <!-- INSTRUCTIONS -->
+        <div class="instructions">
+            <h3>📝 Instructions</h3>
+            <ul>
+                <li>Each question carries 1 mark</li>
+                <li>No negative marking</li>
+                <li>You can submit the quiz anytime</li>
+                <li>Unanswered questions will be marked as not attended</li>
+                <li>Do not refresh the page during the quiz</li>
+            </ul>
+        </div>
+
+        <h3 id="question"></h3>
+
+        <div id="options"></div>
+
+        
+        <!-- PREVIOUS & NEXT BUTTONS -->
+        <div class="button-group">
+            <button type="button" onclick="prevQuestion()">Previous</button>
+            <button type="button" onclick="nextQuestion()">Next</button>
+        </div>
+
+        <p id="warning-msg" class="warning-msg"></p>
+    </div>
+
+    <!-- SUBMIT BUTTON OUTSIDE CONTAINER -->
+    <div class="submit-footer">
+        <button class="submit-btn" onclick="confirmSubmit()">Submit Quiz</button>
+    </div>
+
+    <script src="quiz.js"></script>
+</body>
+
+</html>

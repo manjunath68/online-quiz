@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Result</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="result-container">
+
+    <div class="result-header">
+        <div class="top-home-btn" onclick="goHome()">🏠 Go to Home</div>
+        <h2 id="resultTitle">🎯 Quiz Result</h2>
+        <p id="categoryLine">Performance Summary</p>
+    </div>
+
+    <!-- SCORE SUMMARY -->
+    <div class="score-box">
+        <div class="score-card">
+            <h3>Total Questions</h3>
+            <p id="total">0</p>
+        </div>
+
+        <div class="score-card">
+            <h3>Attended</h3>
+            <p id="attended">0</p>
+        </div>
+
+        <div class="score-card">
+            <h3>Not Attended</h3>
+            <p id="notAttended">0</p>
+        </div>
+
+        <div class="score-card">
+            <h3>Score</h3>
+            <p id="score">0</p>
+        </div>
+
+        <div class="score-card">
+            <h3>Percentage</h3>
+            <p id="percentage">0%</p>
+        </div>
+    </div>
+
+    <!-- ANSWER REVIEW -->
+    <div class="answers-section">
+        <h3>📋 Answer Review</h3>
+        <ol id="answerList"></ol>
+    </div>
+
+
+</div>
+
+<script>
+    /* ========= SAFETY UTILITY ========= */
+    function escapeHTML(text) {
+        return String(text)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+    }
+
+    /* ========= FETCH STORED DATA ========= */
+    const questions = JSON.parse(sessionStorage.getItem("answers"));
+    const userAnswers = JSON.parse(sessionStorage.getItem("userAnswers")) || [];
+    const score = Number(sessionStorage.getItem("score")) || 0;
+    const category = sessionStorage.getItem("category");
+
+    if (!questions || questions.length === 0 || !category) {
+        alert("Result data not found. Please attempt the quiz again.");
+        location.href = "index.html";
+    }
+
+    /* ========= HEADER UPDATE ========= */
+    document.getElementById("resultTitle").innerText = `🎯 ${category} Quiz Result`;
+    document.getElementById("categoryLine").innerText =
+        `You attempted the ${category} quiz`;
+
+    /* ========= CALCULATIONS ========= */
+    const total = questions.length;
+    const attended = userAnswers.filter(a => a !== null && a !== undefined).length;
+    const notAttended = total - attended;
+    const percentage = total === 0 ? 0 : ((score / total) * 100).toFixed(2);
+
+    /* ========= DISPLAY SUMMARY ========= */
+    document.getElementById("total").innerText = total;
+    document.getElementById("attended").innerText = attended;
+    document.getElementById("notAttended").innerText = notAttended;
+    document.getElementById("score").innerText = score;
+    document.getElementById("percentage").innerText = percentage + "%";
+
+    /* ========= RENDER QUESTIONS ========= */
+    const list = document.getElementById("answerList");
+    list.innerHTML = "";
+
+    questions.forEach((q, i) => {
+        const li = document.createElement("li");
+        li.className = "answer-card";
+
+        const status =
+            userAnswers[i] === null || userAnswers[i] === undefined
+                ? "Not Attended"
+                : "Attended";
+
+        let optionsHTML = "";
+
+        for (let j = 0; j < q.options.length; j++) {
+            const opt = q.options[j];
+            const safeOpt = escapeHTML(opt);
+
+            if (opt === q.answer) {
+                optionsHTML += `<li class="correct-option">✔ ${safeOpt}</li>`;
+            } else if (userAnswers[i] === opt) {
+                optionsHTML += `<li class="wrong-option">✖ ${safeOpt}</li>`;
+            } else {
+                optionsHTML += `<li>${safeOpt}</li>`;
+            }
+        }
+
+        li.innerHTML = `
+            <h4>
+                ${i + 1}. ${escapeHTML(q.question)}
+                <span class="status">(${status})</span>
+            </h4>
+            <ul class="option-list">
+                ${optionsHTML}
+            </ul>
+        `;
+
+        list.appendChild(li);
+    });
+
+    function goHome() {
+        sessionStorage.clear();
+        location.href = "index.html";
+    }
+</script>
+
+
+</body>
+</html>

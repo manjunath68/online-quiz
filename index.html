@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tech Quiz Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= TOP BAR (W3Schools Style) ================= -->
+    <div class="topbar">
+        <div class="logo">🧠 TechQuiz</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="#" onclick="startQuiz('Java')">Java</a>
+            <a href="#" onclick="startQuiz('SQL')">SQL</a>
+            <a href="#" onclick="startQuiz('Web')">Web</a>
+        </div>
+    </div>
+
+    <!-- ================= HOME CONTENT ================= -->
+    <div class="container home">
+
+        <h1> Online Technical Quiz Portal</h1>
+
+        <p class="tagline">
+            Test your technical skills. Analyze your knowledge. Improve your future.
+        </p>
+
+        <section>
+            <h2>📘 About This Quiz</h2>
+            <p>
+                This online quiz platform is designed to evaluate and strengthen core technical
+                knowledge required for software development roles. It helps students and freshers
+                assess their understanding of fundamental programming and web concepts.
+            </p>
+        </section>
+
+        <section>
+            <h2>🎯 Why This Quiz?</h2>
+            <ul>
+                <li>✔ Evaluate real-time technical knowledge</li>
+                <li>✔ Improve problem-solving and accuracy</li>
+                <li>✔ Prepare for interviews and assessments</li>
+                <li>✔ Practice under time constraints</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>📚 Quiz Categories</h2>
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Java</h3>
+                    <p>
+                        Covers OOPS, keywords, JVM concepts, exception handling,
+                        collections, and core programming fundamentals.
+                    </p>
+
+                    <button type="button" class="take-quiz-btn" onclick="startQuiz('Java')">
+                        Start Java Quiz
+                    </button>
+                </div>
+
+                <!-- <div class="card" onclick="startQuiz('Java')">
+                <h3>Java</h3>
+                <p>
+                    Covers OOPS, keywords, JVM concepts, exception handling,
+                    collections, and core programming fundamentals.
+                </p>
+            </div> -->
+
+                <div class="card">
+                    <h3>SQL</h3>
+                    <p>
+                        Includes queries, joins, constraints, normalization,
+                        and database fundamentals required for backend development.
+                    </p>
+
+                    <button type="button" class="take-quiz-btn" onclick="startQuiz('SQL')">
+                        Start SQL Quiz
+                    </button>
+                </div>
+
+                <!-- <div class="card" onclick="startQuiz('SQL')">
+                    <h3>SQL</h3>
+                    <p>
+                        Includes queries, joins, constraints, normalization,
+                        and database fundamentals required for backend development.
+                    </p>
+                </div> -->
+
+
+                <div class="card">
+                    <h3>Web Technologies</h3>
+                    <p>
+                        Tests knowledge of HTML about html tags , CSS the designing part, JavaScript, DOM,
+                        browser behavior, and web standards.
+                    </p>
+
+                    <button type="button" class="take-quiz-btn" onclick="startQuiz('Web')">
+                        Start Web Quiz
+                    </button>
+                </div>
+
+                <!-- <div class="card" onclick="startQuiz('Web')">
+                    <h3>Web Technologies</h3>
+                    <p>
+                        Tests knowledge of HTML, CSS, JavaScript, DOM,
+                        browser behavior, and web standards.
+                    </p>
+                </div> -->
+
+            </div>
+        </section>
+
+        <section class="rules">
+            <h2>📝 Quiz Rules</h2>
+            <ul>
+                <li>📌 Each quiz contains 30 questions</li>
+                <li>⏱ Time Limit: 30 Minutes per category</li>
+                <li>🧠 MCQ-based assessment</li>
+                <li>📊 Score & percentage shown after submission</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- ================= SCRIPT ================= -->
+    <script>
+        function startQuiz(category) {
+            sessionStorage.clear();          // 🔥 RESET EVERYTHING
+            sessionStorage.setItem("category", category);
+            sessionStorage.setItem("index", 0);
+            sessionStorage.setItem("score", 0);
+            sessionStorage.setItem("time", 1800);
+            sessionStorage.setItem("userAnswers", JSON.stringify([])); // 🔥 IMPORTANT
+
+            window.location.href = "quiz.html";
+        }
+
+    </script>
+
+</body>
+
+</html>
